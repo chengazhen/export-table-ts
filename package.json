@@ -1,0 +1,28 @@
+{
+  "name": "export-table",
+  "version": "0.1.7",
+  "devDependencies": {
+    "@types/jquery": "^3.5.14",
+    "tsup": "^5.12.5",
+    "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "axios": "^0.26.1"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist//index.cjs"
+    }
+  },
+  "license": "MIT"
+}
