@@ -2,6 +2,7 @@
   "name": "export-table",
   "version": "0.1.7",
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "tsup": "^5.12.5",
     "typescript": "^4.6.3"
   },
@@ -9,7 +10,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "axios": "^0.26.1",
+    "file-saver": "^2.0.5",
     "xlsx": "^0.18.5"
   },
   "main": "./dist/index.js",

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>多级表头excel导出</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+  </head>
+
+  <body>
+    <div id="app">
+      <el-button @click="downLoad">导出</el-button>
+
+      <el-table
+        @selection-change="handleSelectionChange"
+        :data="list"
+        style="width: 100%"
+        size="mini"
+      >
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column
+          label="姓名"
+          prop="name"
+          align="center"
+        ></el-table-column>
+        <el-table-column label="专业技能" align="center">
+          <el-table-column label="前端" align="center">
+            <el-table-column
+              label="JavaScript"
+              prop="js"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              label="CSS"
+              prop="css"
+              align="center"
+            ></el-table-column>
+          </el-table-column>
+          <el-table-column label="后端" align="center">
+            <el-table-column label="java" align="center">
+              <el-table-column
+                label="nio"
+                prop="nio"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                label="基础"
+                prop="basic"
+                align="center"
+              ></el-table-column>
+            </el-table-column>
+            <el-table-column label="框架" align="center">
+              <el-table-column
+                label="SpringBoot"
+                prop="springboot"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                label="MyBatis"
+                prop="mybatis"
+                align="center"
+              ></el-table-column>
+            </el-table-column>
+          </el-table-column>
+        </el-table-column>
+      </el-table>
+    </div>
+    <!-- <script src="./js/Export2Excel.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.0/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-style@0.8.13/dist/xlsx.core.min.js"></script>
+    <script src="./index.global.js"></script>
+    <script>
+      console.log(window)
+      const app = new Vue({
+        el: '#app',
+        data() {
+          return {
+            selectionData: [],
+            defaultCellStyle: {
+              font: { name: 'Verdana', sz: 11, color: 'FF00FF88' },
+              fill: { fgColor: { rgb: 'FFFFAA00' } },
+              alignment: {
+                horizontal: 'center',
+                vertical: 'center'
+              }
+            },
+            list: [
+              {
+                name: '张三',
+                js: '熟练',
+                css: '一般',
+                nio: '了解',
+                basic: '精通',
+                springboot: '熟练',
+                mybatis: '了解'
+              },
+              {
+                name: '张三',
+                js: '熟练',
+                css: '一般',
+                nio: '了解',
+                basic: '精通',
+                springboot: '熟练',
+                mybatis: '了解'
+              },
+              {
+                name: '张三',
+                js: '熟练',
+                css: '一般',
+                nio: '了解',
+                basic: '精通',
+                springboot: '熟练',
+                mybatis: '了解'
+              },
+              {
+                name: '张三',
+                js: '熟练',
+                css: '一般',
+                nio: '了解',
+                basic: '精通',
+                springboot: '熟练',
+                mybatis: '了解'
+              }
+            ],
+            revealList: [
+              {
+                name: '姓名',
+                prop: 'name'
+              },
+              {
+                name: '专业技能',
+                child: [
+                  {
+                    name: '前端',
+                    child: [
+                      {
+                        name: 'JavaScript',
+                        prop: 'js'
+                      },
+                      {
+                        name: 'CSS',
+                        prop: 'css'
+                      }
+                    ]
+                  },
+                  {
+                    name: '后端',
+                    child: [
+                      {
+                        name: 'java',
+                        child: [
+                          {
+                            name: 'nio',
+                            prop: 'nio'
+                          },
+                          {
+                            name: '基础',
+                            prop: 'basic'
+                          }
+                        ]
+                      },
+                      {
+                        name: '框架',
+                        child: [
+                          {
+                            name: 'SpringBoot',
+                            prop: 'springboot'
+                          },
+                          {
+                            name: 'MyBatis',
+                            prop: 'mybatis'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        methods: {
+          handleSelectionChange(selection) {
+            this.selectionData = selection
+          },
+          downLoad() {
+            exportData(this.list, this.revealList)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
