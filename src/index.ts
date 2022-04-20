@@ -181,15 +181,16 @@ class ExprotExcel {
    */
   private doMerges(arrs: Array<string | number>[]) {
     const merges: Range[] = []
-    arrs.forEach((arr, x) => {
+    arrs.forEach((arr, y) => {
       let colSpan: number = 0
-      arr.forEach((row, y) => {
+      arr.forEach((row, x) => {
         if (row === '!$COL_SPAN_PLACEHOLDER') {
-          row = ''
-          if (y + 1 === arr.length) {
+          arr[x] = ''
+          if (x + 1 === arr.length) {
             merges.push({ s: { r: y, c: x - colSpan - 1 }, e: { r: y, c: x } })
           }
-        } else if (colSpan > 0 && y > colSpan) {
+          colSpan++
+        } else if (colSpan > 0 && x > colSpan) {
           merges.push({
             s: { r: y, c: x - colSpan - 1 },
             e: { r: y, c: x - 1 }
@@ -233,7 +234,7 @@ class ExprotExcel {
    */
   private extractData(selectionData: DataProp, revealList: HeadProp[]) {
     // 列
-    let headerList = this.flat(revealList)
+    let headerList = this.flat(revealList, Infinity)
     // 导出的结果集
     let excelRows: Array<string | number>[] = []
     // 如果有child集合的话会用到
@@ -275,7 +276,7 @@ class ExprotExcel {
           cols.push('!$ROW_SPAN_PLACEHOLDER')
         } else {
           let value: string | number = ''
-          if (header.exeFun && typeof header.exeFun) {
+          if (header.exeFun && typeof header.exeFun === 'function') {
             value = header.exeFun(rawData)
           } else {
             if (header.prop) {
@@ -315,16 +316,15 @@ class ExprotExcel {
   // 扁平头部
   private flat(revealList: HeadProp[], d: number = 1): HeadProp[] {
     const result: HeadProp[] = []
-    revealList.forEach(e => {
-      if (e.hasOwnProperty('child')) {
-        e.child && result.push(...this.flat(e.child))
-      } else if (e.hasOwnProperty('exeFun')) {
-        result.push(e)
-      } else if (e.hasOwnProperty('prop')) {
-        result.push(e)
-      }
-    })
-    return result
+    return d > 0
+      ? revealList.reduce(
+          (acc, val) =>
+            acc.concat(
+              Array.isArray(val.child) ? this.flat(val.child, d - 1) : val
+            ),
+          result
+        )
+      : revealList.slice()
   }
 
   /**
