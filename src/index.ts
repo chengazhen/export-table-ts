@@ -1,4 +1,5 @@
-import * as XLSX from 'xlsx'
+// import * as XLSX, {} from 'xlsx'
+import { write, utils } from 'xlsx'
 import type { WorkBook, WritingOptions, WorkSheet, Range } from 'xlsx'
 import { saveAs } from 'file-saver'
 type CellStyle = {
@@ -85,7 +86,7 @@ class ExprotExcel {
     }
 
     // 表格样式
-    const wbout = XLSX.write(workbook, wopts)
+    const wbout = write(workbook, wopts)
 
     let blob: Blob = new Blob([this.s2ab(wbout)], {
       type: 'application/octet-stream'
@@ -154,7 +155,7 @@ class ExprotExcel {
           cell.s = style
         }
 
-        const cell_ref = XLSX.utils.encode_cell({ c: C, r: R })
+        const cell_ref = utils.encode_cell({ c: C, r: R })
 
         if (typeof cell.v === 'number') {
           cell.t = 'n'
@@ -169,7 +170,7 @@ class ExprotExcel {
     })
 
     if (range.s.c < 10000000) {
-      ws['!ref'] = XLSX.utils.encode_range(range)
+      ws['!ref'] = utils.encode_range(range)
     }
     return ws
   }
