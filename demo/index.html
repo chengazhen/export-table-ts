@@ -13,6 +13,7 @@
   <body>
     <div id="app">
       <el-button @click="downLoad">导出</el-button>
+      <el-button @click="downLoad2">导出一级表头</el-button>
 
       <el-table
         @selection-change="handleSelectionChange"
@@ -75,7 +76,6 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx-style@0.8.13/dist/xlsx.core.min.js"></script>
     <script src="./index.global.js"></script>
     <script>
-      console.log(window)
       const app = new Vue({
         el: '#app',
         data() {
@@ -189,7 +189,16 @@
             this.selectionData = selection
           },
           downLoad() {
-            exportData(this.list, this.revealList)
+            exportData(this.selectionData, this.revealList)
+          },
+          downLoad2() {
+            exportData(
+              [{ js: 'sdfsdf', name: '一级' }],
+              [
+                { prop: 'js', name: '书籍' },
+                { prop: 'name', name: '名字' }
+              ]
+            )
           }
         }
       })
