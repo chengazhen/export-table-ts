@@ -32,5 +32,6 @@
     "exportTable",
     "table",
     "xlsx"
-  ]
+  ],
+  "homepage": "https://azhen98.github.io/export-table-ts/"
 }
