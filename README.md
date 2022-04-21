@@ -1,4 +1,4 @@
-[使用的demo](https://gitee.com/a_zhen_a/export-excel)
+[使用的demo](https://azhen98.github.io/export-table-ts/)
 
 ## 使用示例(支持多级 Header)
 

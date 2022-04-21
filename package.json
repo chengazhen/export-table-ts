@@ -33,5 +33,9 @@
     "table",
     "xlsx"
   ],
-  "homepage": "https://azhen98.github.io/export-table-ts/"
+  "homepage": "https://azhen98.github.io/export-table-ts/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azhen98/export-table-ts"
+  }
 }
