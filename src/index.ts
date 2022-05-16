@@ -1,7 +1,7 @@
-// import * as XLSX, {} from 'xlsx'
 import { write, utils } from 'xlsx'
 import type { WorkBook, WritingOptions, WorkSheet, Range } from 'xlsx'
 import { saveAs } from 'file-saver'
+
 type CellStyle = {
   alignment: {
     horizontal: string
@@ -104,7 +104,10 @@ class ExprotExcel {
     return buf
   }
 
-  private aoa_to_sheet(datas: Array<string | number>[], headerRows: number) {
+  private aoa_to_sheet(
+    datas: Array<string | number>[],
+    headerRows: number
+  ): WorkSheet {
     const ws: WorkSheet = {}
     const range: { s: { c: number; r: number }; e: { c: number; r: number } } =
       {
@@ -358,23 +361,6 @@ class ExprotExcel {
     return resultList
   }
 
-  // flatData2(revealList: DataProp, eachDataCallBack): Record<string, unknown>[] {
-  //   for (const item of revealList) {
-  //     const result: PropType[] = []
-
-  //     item.child && item.child
-  //   }
-  //   // return d > 0
-  //   //   ? revealList.reduce(
-  //   //       (acc, val) =>
-  //   //         acc.concat(
-  //   //           Array.isArray(val.child) ? this.flatData2(val.child, d - 1) : val
-  //   //         ),
-  //   //       result
-  //   //     )
-  //   //   : revealList.slice()
-  // }
-
   /**
    * 构建excel表头
    * @param revealList 列表页面展示的表头
@@ -449,6 +435,7 @@ class ExprotExcel {
       arr.push('!$COL_SPAN_PLACEHOLDER')
     }
   }
+
   /**
    * 填充行合并占位符
    * */
